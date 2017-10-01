@@ -567,7 +567,7 @@ int mm_isBranchInstr(struct pt_regs *regs, struct mm_decoded_insn dec_insn,
 		case mm_bc1t_op:
 			preempt_disable();
 			if (is_fpu_owner())
-				asm volatile("cfc1\t%0,$31" : "=r" (fcr31));
+				fcr31 = read_32bit_cp1_register(CP1_STATUS);
 			else
 				fcr31 = current->thread.fpu.fcr31;
 			preempt_enable();
@@ -816,7 +816,7 @@ static int isBranchInstr(struct pt_regs *regs, struct mm_decoded_insn dec_insn,
 		if (insn.i_format.rs == bc_op) {
 			preempt_disable();
 			if (is_fpu_owner())
-				asm volatile("cfc1\t%0,$31" : "=r" (fcr31));
+				fcr31 = read_32bit_cp1_register(CP1_STATUS);
 			else
 				fcr31 = current->thread.fpu.fcr31;
 			preempt_enable();

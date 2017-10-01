@@ -183,6 +183,8 @@ LEAF(_restore_fp)
  */
 
 LEAF(_init_fpu)
+	.set	push
+	SET_HARDFLOAT
 #ifdef CONFIG_MIPS_MT_SMTC
 	/* Rather than manipulate per-VPE Status, set per-TC bit in TCStatus */
 	mfc0	t0, CP0_TCSTATUS
@@ -351,5 +353,6 @@ LEAF(_init_fpu)
 	dmtc1	t1, $f28
 	dmtc1	t1, $f30
 #endif /* CONFIG_CPU_MIPS32 */
+	.set	pop
 	jr	ra
 	END(_init_fpu)
