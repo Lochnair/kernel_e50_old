@@ -504,6 +504,7 @@ struct sk_buff {
 #ifdef CONFIG_SHORTCUT_FE
 	__u8			fast_forwarded:1;
 #endif
+
 	/* Encapsulation protocol and NIC drivers should use
 	 * this flag to indicate to each other if the skb contains
 	 * encapsulated packet or not and maybe use the inner packet
