@@ -70,6 +70,7 @@ obj-$(CONFIG_BATMAN_ADV)	+= batman-adv/
 obj-$(CONFIG_NFC)		+= nfc/
 obj-$(CONFIG_OPENVSWITCH)	+= openvswitch/
 obj-$(CONFIG_VSOCKETS)	+= vmw_vsock/
+obj-$(CONFIG_SHORTCUT_FE)	+= shortcut-fe/
 
 ifneq ($(CONFIG_RA_NAT_NONE),y)
 obj-y                           += nat/foe_hook/
