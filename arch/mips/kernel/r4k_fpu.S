@@ -31,6 +31,8 @@
 
 	.set	noreorder
 	.set	mips3
+	.set	push
+	SET_HARDFLOAT
 
 LEAF(_save_fp_context)
 	cfc1	t1, fcr31
@@ -53,9 +55,11 @@ LEAF(_save_fp_context)
 	EX	sdc1 $f27, SC_FPREGS+216(a0)
 	EX	sdc1 $f29, SC_FPREGS+232(a0)
 	EX	sdc1 $f31, SC_FPREGS+248(a0)
+	.set	pop
 #else
 #ifdef CONFIG_MIPS32_R2
 	.set    push
+	SET_HARDFLOAT
 	.set    mips64r2
 	.set    noreorder
 	mfc0    t0, CP0_STATUS
