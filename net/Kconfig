@@ -218,6 +218,7 @@ source "net/batman-adv/Kconfig"
 source "net/openvswitch/Kconfig"
 source "net/vmw_vsock/Kconfig"
 source "net/netlink/Kconfig"
+source "net/shortcut-fe/Kconfig"
 
 config RPS
 	boolean
@@ -343,6 +344,3 @@ endif   # if NET
 # Used by archs to tell that they support BPF_JIT
 config HAVE_BPF_JIT
 	bool
-
-config SHORTCUT_FE
-	bool "Enables kernel network stack path for Shortcut Forwarding Engine"
