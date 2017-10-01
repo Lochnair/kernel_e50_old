@@ -34,7 +34,7 @@
 /* "Be conservative in what you do,
     be liberal in what you accept from others."
     If it's non-zero, we mark only out of window RST segments as INVALID. */
-#ifdef CONFIG_SHORTCUT_FE
+#if IS_ENABLED(CONFIG_SHORTCUT_FE)
 int nf_ct_tcp_be_liberal __read_mostly = 0;
 EXPORT_SYMBOL_GPL(nf_ct_tcp_be_liberal);
 #else

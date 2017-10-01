@@ -2574,7 +2574,7 @@ int dev_hard_start_xmit(struct sk_buff *skb, struct net_device *dev,
 					goto out_kfree_skb;
 			}
 		}
-#ifdef CONFIG_SHORTCUT_FE
+#if IS_ENABLED(CONFIG_SHORTCUT_FE)
 	/* If this skb has been fast forwarded then we don't want it to
 	 * go to any taps (by definition we're trying to bypass them).
 	 */
@@ -2587,7 +2587,7 @@ int dev_hard_start_xmit(struct sk_buff *skb, struct net_device *dev,
  		if (!list_empty(&ptype_all))
 #endif
  			dev_queue_xmit_nit(skb, dev);
-#ifdef CONFIG_SHURTCUT_FE
+#ifdef IS_ENABLED(CONFIG_SHORTCUT_FE)
 	}
 #endif
 		skb_len = skb->len;
@@ -3409,7 +3409,7 @@ void netdev_rx_handler_unregister(struct net_device *dev)
 }
 EXPORT_SYMBOL_GPL(netdev_rx_handler_unregister);
 
-#ifdef CONFIG_SHORTCUT_FE
+#if IS_ENABLED(CONFIG_SHORTCUT_FE)
 int (*fast_nat_recv)(struct sk_buff *skb) __rcu __read_mostly;
 EXPORT_SYMBOL_GPL(fast_nat_recv);
 #endif
@@ -3441,7 +3441,7 @@ static int __netif_receive_skb_core(struct sk_buff *skb, bool pfmemalloc)
 	bool deliver_exact = false;
 	int ret = NET_RX_DROP;
 	__be16 type;
-#ifdef CONFIG_SHORTCUT_FE
+#if IS_ENABLED(CONFIG_SHORTCUT_FE)
 	int (*fast_recv)(struct sk_buff *skb);
 #endif
 
@@ -3476,7 +3476,7 @@ another_round:
 			goto unlock;
 	}
 
-#ifdef CONFIG_SHORTCUT_FE
+#if IS_ENABLED(CONFIG_SHORTCUT_FE)
 	fast_recv = rcu_dereference(fast_nat_recv);
 	if (fast_recv) {
 		if (fast_recv(skb)) {
