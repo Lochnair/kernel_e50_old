@@ -1377,6 +1377,7 @@ static void fast_classifier_sync_rule(struct sfe_connection_sync *sis)
 	/*
 	 * Update packet count for ingress on bridge device
 	 */
+#if IS_ENABLED(CONFIG_BRIDGE)
 	if (skip_to_bridge_ingress) {
 		struct rtnl_link_stats64 nlstats;
 		nlstats.tx_packets = 0;
@@ -1399,6 +1400,7 @@ static void fast_classifier_sync_rule(struct sfe_connection_sync *sis)
 			spin_unlock_bh(&sfe_connections_lock);
 		}
 	}
+#endif
 
 	/*
 	 * Look up conntrack connection
