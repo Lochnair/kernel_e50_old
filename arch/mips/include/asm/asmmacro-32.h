@@ -17,6 +17,8 @@
 	/* copy stuff from MIPS64 */
 
 	.macro  fpu_save_16even thread tmp=t0
+	.set	push
+	SET_HARDFLOAT
 	cfc1    \tmp, fcr31
 	sdc1    $f0,  THREAD_FPR0(\thread)
 	sdc1    $f2,  THREAD_FPR2(\thread)
@@ -35,11 +37,13 @@
 	sdc1    $f28, THREAD_FPR28(\thread)
 	sdc1    $f30, THREAD_FPR30(\thread)
 	sw  \tmp, THREAD_FCR31(\thread)
+	.set pop
 	.endm
 
 	.macro  fpu_save_16odd thread
 	.set    push
 	.set    mips64r2
+	SET_HARDFLOAT
 	sdc1    $f1,  THREAD_FPR1(\thread)
 	sdc1    $f3,  THREAD_FPR3(\thread)
 	sdc1    $f5,  THREAD_FPR5(\thread)
@@ -72,6 +76,8 @@
 	.endm
 
 	.macro  fpu_restore_16even thread tmp=t0
+	.set	push
+	SET_HARDFLOAT
 	lw  \tmp, THREAD_FCR31(\thread)
 	ldc1    $f0,  THREAD_FPR0(\thread)
 	ldc1    $f2,  THREAD_FPR2(\thread)
@@ -90,11 +96,13 @@
 	ldc1    $f28, THREAD_FPR28(\thread)
 	ldc1    $f30, THREAD_FPR30(\thread)
 	ctc1    \tmp, fcr31
+	.set pop
 	.endm
 
 	.macro  fpu_restore_16odd thread
 	.set    push
 	.set    mips64r2
+	SET_HARDFLOAT
 	ldc1    $f1,  THREAD_FPR1(\thread)
 	ldc1    $f3,  THREAD_FPR3(\thread)
 	ldc1    $f5,  THREAD_FPR5(\thread)
@@ -129,6 +137,8 @@
 #else
 
 	.macro  fpu_save_double thread status tmp1=t0
+	.set	push
+	SET_HARDFLOAT
 	cfc1	\tmp1,  fcr31
 	sdc1	$f0,  THREAD_FPR0(\thread)
 	sdc1	$f2,  THREAD_FPR2(\thread)
@@ -147,9 +157,12 @@
 	sdc1	$f28, THREAD_FPR28(\thread)
 	sdc1	$f30, THREAD_FPR30(\thread)
 	sw	\tmp1, THREAD_FCR31(\thread)
+	.set	pop
 	.endm
 
 	.macro	fpu_save_single thread tmp=t0
+	.set	push
+	SET_HARDFLOAT
 	cfc1	\tmp,  fcr31
 	swc1	$f0,  THREAD_FPR0(\thread)
 	swc1	$f1,  THREAD_FPR1(\thread)
@@ -184,9 +197,12 @@
 	swc1	$f30, THREAD_FPR30(\thread)
 	swc1	$f31, THREAD_FPR31(\thread)
 	sw	\tmp, THREAD_FCR31(\thread)
+	.set	pop
 	.endm
 
 	.macro	fpu_restore_double thread status tmp=t0
+	.set	push
+	SET_HARDFLOAT
 	lw	\tmp, THREAD_FCR31(\thread)
 	ldc1	$f0,  THREAD_FPR0(\thread)
 	ldc1	$f2,  THREAD_FPR2(\thread)
@@ -205,9 +221,12 @@
 	ldc1	$f28, THREAD_FPR28(\thread)
 	ldc1	$f30, THREAD_FPR30(\thread)
 	ctc1	\tmp, fcr31
+	.set pop
 	.endm
 
 	.macro	fpu_restore_single thread tmp=t0
+	.set push
+	SET_HARDFLOAT
 	lw	\tmp, THREAD_FCR31(\thread)
 	lwc1	$f0,  THREAD_FPR0(\thread)
 	lwc1	$f1,  THREAD_FPR1(\thread)
@@ -242,6 +261,7 @@
 	lwc1	$f30, THREAD_FPR30(\thread)
 	lwc1	$f31, THREAD_FPR31(\thread)
 	ctc1	\tmp, fcr31
+	.set pop
 	.endm
 
 #endif  // CONFIG_CPU_MIPS32_R2
