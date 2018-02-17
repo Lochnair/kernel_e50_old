@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'lochnair/erx-kernel-dev:latest' }
+        docker { image 'lochnair/mtk-buildenv:latest' }
     }
 
     stages {
