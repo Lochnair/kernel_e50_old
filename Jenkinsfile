@@ -11,6 +11,13 @@ pipeline {
             }
         }
 
+        stage('Install dependencies') {
+            steps {
+                sh 'su-exec root apt-get update'
+                sh 'su-exec root apt-get -y install bc bison flex'
+            }
+        }
+        
         stage('Prepare for out-of-tree builds') {
             steps {
                 sh 'make ARCH=mips ubnt_er_e50_defconfig'
